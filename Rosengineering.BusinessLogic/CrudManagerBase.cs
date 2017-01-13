@@ -132,10 +132,46 @@ namespace Rosengineering.BusinessLogic
 			}
 		}
 
+		public ExecuteStatus<TModel> Get(TKey id)
+		{
+			try
+			{
+				var item = _context.Set<TModel>()
+					.Find(id);
+				return new ExecuteStatus<TModel>
+				{
+					Result = item
+				};
+			}
+			catch (Exception e)
+			{
+				return e.ToStatus<ExecuteStatus<TModel>>();
+			}
+		}
+
+		public async Task<ExecuteStatus<TModel>> GetAsync(TKey id)
+		{
+			try
+			{
+				var item = await _context.Set<TModel>()
+					.FindAsync(id);
+				return new ExecuteStatus<TModel>
+				{
+					Result = item
+				};
+			}
+			catch (Exception e)
+			{
+				return e.ToStatus<ExecuteStatus<TModel>>();
+			}
+		}
+
 		public IQueryable<TModel> Query => GetQuery();
+		
 	}
 
-	public abstract class CrudManagerBase<TModel> : CrudManagerBase<TModel, int> where TModel : class, IIdentity<int>
+	public abstract class CrudManagerBase<TModel> : CrudManagerBase<TModel, int>, ICrudManager<TModel>
+		where TModel : class, IIdentity<int>
 	{
 		protected CrudManagerBase(IValidator<TModel> validator, RosengineeringDbContext context) 
 			: base(validator, context)

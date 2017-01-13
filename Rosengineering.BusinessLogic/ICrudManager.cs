@@ -19,6 +19,10 @@ namespace Rosengineering.BusinessLogic
 
 	    Task<ExecuteStatus> DeleteAsync(int id);
 
+	    ExecuteStatus<TModel> Get(TKey id);
+
+	    Task<ExecuteStatus<TModel>> GetAsync(TKey id);
+
 		IQueryable<TModel> Query { get; }
     }
 

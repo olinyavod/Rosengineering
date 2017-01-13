@@ -5,10 +5,16 @@ namespace Rosengineering.BusinessLogic
 {
 	public class ModifyStatus<TResult> : ExecuteStatus<TResult>
 	{
+		public ModifyStatus()
+		{
+			IsValid = true;
+			FailPropeties = new List<ValidationFailure>();
+		}
+
 		public bool IsValid { get; set; }
 
 		public IEnumerable<ValidationFailure> FailPropeties { get; set; }
 
-		public bool WIthErrors => HasError || !IsValid;
+		public bool WithErrors => HasError || !IsValid;
 	}
 }

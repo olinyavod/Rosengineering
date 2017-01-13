@@ -58,6 +58,10 @@
       <HintPath>..\packages\NUnit.3.6.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ploeh.AutoFixture, Version=3.50.2.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoFixture.3.50.2\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -73,12 +77,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ManagerTests\CrudManagerTests.cs" />
+    <Compile Include="ManagerTests\IManagerTestConfig.cs" />
+    <Compile Include="ManagerTests\ManagerTestConfg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Rosengineering.BusinessLogic\Rosengineering.BusinessLogic.csproj">
+      <Project>{215e79a7-154e-4882-8cf5-6a18a6111f11}</Project>
+      <Name>Rosengineering.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rosengineering.DAL\Rosengineering.DAL.csproj">
+      <Project>{fb2f0d22-984e-4fbf-b210-a03cbefb2a86}</Project>
+      <Name>Rosengineering.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rosengineering.Desktop\Rosengineering.Desktop.csproj">
+      <Project>{1A396D21-4824-4373-B5BB-376CCA1F37CA}</Project>
+      <Name>Rosengineering.Desktop</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
