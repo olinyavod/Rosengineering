@@ -14,6 +14,8 @@ namespace Rosengineering.Desktop
 		protected override void Load(ContainerBuilder builder)
 		{
 			base.Load(builder);
+			builder.RegisterModule(new ViewsModule());
+
 			builder.RegisterType<RosengineeringDbContext>()
 				.SingleInstance();
 			builder.RegisterType<RosengineeringDbInitializer>()
@@ -36,5 +38,7 @@ namespace Rosengineering.Desktop
 				.As<ICrudManager<UserGroup>>()
 				.SingleInstance();
 		}
+
+		
 	}
 }

@@ -1,6 +1,8 @@
 ﻿using System.Data.Entity;
 using System.Windows;
 using Autofac;
+using Autofac.Extras.CommonServiceLocator;
+using Microsoft.Practices.ServiceLocation;
 using Rosengineering.DAL;
 
 namespace Rosengineering.Desktop
@@ -8,20 +10,15 @@ namespace Rosengineering.Desktop
 	/// <summary>
 	/// Логика взаимодействия для App.xaml
 	/// </summary>
-	public partial class App : Application
+	public partial class App
 	{
-		public static IContainer Container { get; private set; }
+		public AppBootstraper Bootstraper { get; private set; }
 
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			base.OnStartup(e);
-			var builder = new ContainerBuilder();
-			builder.RegisterModule<DesktopModule>();
-
-			Container = builder.Build();
-
-			Database.SetInitializer(Container.Resolve<IDatabaseInitializer<RosengineeringDbContext>>());
-
+			Bootstraper = new AppBootstraper();
+			Bootstraper.Run();
 		}
 	}
 }
