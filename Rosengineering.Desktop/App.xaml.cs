@@ -20,8 +20,8 @@ namespace Rosengineering.Desktop
 
 			Container = builder.Build();
 
-			Container.Resolve<IDatabaseInitializer<RosengineeringDbContext>>()
-				.InitializeDatabase(Container.Resolve<RosengineeringDbContext>());
+			Database.SetInitializer(Container.Resolve<IDatabaseInitializer<RosengineeringDbContext>>());
+
 		}
 	}
 }

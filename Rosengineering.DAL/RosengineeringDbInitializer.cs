@@ -1,29 +1,12 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using Rosengineering.DAL.Migrations;
 using Rosengineering.DAL.Models;
 
 namespace Rosengineering.DAL
 {
-	public class RosengineeringDbInitializer : CreateDatabaseIfNotExists<RosengineeringDbContext>
+	public class RosengineeringDbInitializer : MigrateDatabaseToLatestVersion<RosengineeringDbContext, Configuration>
 	{
-		public RosengineeringDbInitializer()
-		{
-			
-		}
-
-		protected override void Seed(RosengineeringDbContext context)
-		{
-			base.Seed(context);
-			context.Set<UserGroup>()
-				.AddOrUpdate(m => m.Title,
-					new UserGroup
-					{
-						Title = "VIP"
-					},
-					new UserGroup
-					{
-						Title = "Обычный"
-					});
-		}
+		
 	}
 }

@@ -4,7 +4,7 @@ namespace Rosengineering.DAL.Migrations
 {
 	using System.Data.Entity.Migrations;
 
-	internal sealed class Configuration : DbMigrationsConfiguration<Rosengineering.DAL.RosengineeringDbContext>
+	public sealed class Configuration : DbMigrationsConfiguration<Rosengineering.DAL.RosengineeringDbContext>
     {
         public Configuration()
         {
@@ -13,7 +13,16 @@ namespace Rosengineering.DAL.Migrations
 
         protected override void Seed(Rosengineering.DAL.RosengineeringDbContext context)
         {
-	        
-        }
+			context.Set<UserGroup>()
+				.AddOrUpdate(m => m.Title,
+					new UserGroup
+					{
+						Title = "VIP"
+					},
+					new UserGroup
+					{
+						Title = "Обычный"
+					});	
+		}
     }
 }
