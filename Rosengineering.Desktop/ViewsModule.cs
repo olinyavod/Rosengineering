@@ -9,7 +9,7 @@ namespace Rosengineering.Desktop
 		{
 			base.Load(builder);
 
-			builder.RegisterType<MainWindow>()
+			builder.RegisterType<Views.MainWindow>()
 				.Named<DependencyObject>("Shell");
 		}
 	}

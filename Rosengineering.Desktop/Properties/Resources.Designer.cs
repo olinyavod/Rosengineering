@@ -95,5 +95,14 @@ namespace Rosengineering.Desktop.Properties {
                 return ResourceManager.GetString("mnuUserGroupsList", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Удалить: {0}?.
+        /// </summary>
+        public static string msgDeleteItem {
+            get {
+                return ResourceManager.GetString("msgDeleteItem", resourceCulture);
+            }
+        }
     }
 }

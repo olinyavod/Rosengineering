@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Rosengineering.Desktop
+namespace Rosengineering.Desktop.Views
 {
 	/// <summary>
 	/// Логика взаимодействия для MainWindow.xaml

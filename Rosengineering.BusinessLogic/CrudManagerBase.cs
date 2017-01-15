@@ -117,7 +117,7 @@ namespace Rosengineering.BusinessLogic
 			}
 		}
 
-		public virtual async Task<ExecuteStatus> DeleteAsync(int id)
+		public virtual async Task<ExecuteStatus> DeleteAsync(TKey id)
 		{
 			try
 			{
