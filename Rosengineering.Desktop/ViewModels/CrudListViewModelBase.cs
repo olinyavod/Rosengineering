@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,17 +12,25 @@ using Rosengineering.Desktop.Services;
 
 namespace Rosengineering.Desktop.ViewModels
 {
-	public abstract  class CrudListViewModelBase<TModel, TItem, TKey> : ViewModelBase
+	public abstract  class CrudListViewModelBase<TModel, TManager, TItem, TKey> : ViewModelBase
 		where TModel : class, IIdentity<TKey>
 		where TItem : class, IIdentity<TKey>
+		where TManager : class, ICrudManager<TModel, TKey>
 	{
-		private readonly ICrudManager<TModel, TKey> _manager;
-
-		protected CrudListViewModelBase(ICrudManager<TModel, TKey> manager)
+		public  TManager Manager
 		{
-			_manager = manager;
+			get { return this.Resolve<TManager>(); }
+		}
+		private readonly CrudListConfig _config;
+
+		protected CrudListViewModelBase(CrudListConfig config)
+		{
+			_config = config;
+			DisplayTitle = config.DefaultTitle;
 			DeleteCommand = new AsyncCommand(OnDeleteAsync, OnCanDelete);
 			RefreshCommand = new AsyncCommand(OnRefreshAsync);
+			DetailsCommand = new AsyncCommand(OnDetails, OnCanDetails);
+			AddCommand = new AsyncCommand(OnAdd, OnCanAdd);
 		}
 
 		protected override void OnParameterChanged(object parameter)
@@ -30,13 +39,13 @@ namespace Rosengineering.Desktop.ViewModels
 			ItemsSource = GetItemsSource();
 		}
 
-		public IQueryable<TItem> ItemsSource
+		public IEnumerable<TItem> ItemsSource
 		{
 			get { return GetProperty(() => ItemsSource); }
 			set { SetProperty(() => ItemsSource, value); }
 		}
 
-		protected abstract IQueryable<TItem> GetItemsSource();
+		protected abstract IEnumerable<TItem> GetItemsSource();
 
 		public TItem SelectedItem
 		{
@@ -66,7 +75,7 @@ namespace Rosengineering.Desktop.ViewModels
 		{
 			var messageBox = GetService<IMessageBoxService>();
 			var item = SelectedItem;
-			if (messageBox.Show(GetDeleteMessage(item), DisplayTitle, MessageButton.YesNo, MessageIcon.Question) != MessageBoxResult.Yes)
+			if (messageBox.Show(GetDeleteMessage(item), DisplayTitle, MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
 			{
 				return;
 			}
@@ -74,7 +83,7 @@ namespace Rosengineering.Desktop.ViewModels
 			try
 			{
 				waitService.ShowSplashScreen();
-				var result = await _manager.DeleteAsync(item.Id);
+				var result = await Manager.DeleteAsync(item.Id);
 				if (result.HasError)
 				{
 					this.ShowError(DisplayTitle, result);
@@ -108,18 +117,73 @@ namespace Rosengineering.Desktop.ViewModels
 			return SelectedItem != null;
 		}
 
-		protected abstract string DetailsViewName { get; }
-
 		protected virtual object CreateDetailsParameter(TItem item)
 		{
-			return new ModelEditorParameter {Id = item.Id};
+			return new ModelEditorParameter<TKey> {Id = item.Id};
 		}
 
 		protected virtual Task OnDetails()
 		{
-			GetService<IWindowService>()
-				.Show(DetailsViewName, CreateDetailsParameter(SelectedItem), this);
-			return Task.FromResult(true);
+			var windowService = GetService<IWindowService>();
+			windowService.Title = _config.DetailsTitle;
+			windowService
+				.Show(_config.DetailsEditorViewName, CreateDetailsParameter(SelectedItem), this);
+			return OnRefreshAsync();
+		}
+
+		public ICommand AddCommand { get; private set; }
+
+		protected virtual bool OnCanAdd()
+		{
+			return true;
+		}
+
+		protected virtual Task OnAdd()
+		{
+			var windowService = GetService<IWindowService>();
+			windowService.Title = _config.AddTitle;
+			windowService
+				.Show(_config.AddEditorViewName, CreateNewParameter(), this);
+			return OnRefreshAsync();
+		}
+
+		private object CreateNewParameter()
+		{
+			return new ModelEditorParameter<TKey> {IsNew = true};
+		}
+	}
+
+	public abstract class CrudListViewModelBase<TModel, TManager, TItem> : CrudListViewModelBase<TModel, TManager, TItem, int> 
+		where TModel : class, IIdentity<int> 
+		where TManager : class, ICrudManager<TModel> 
+		where TItem : class, IIdentity<int>
+	{
+		protected CrudListViewModelBase(CrudListConfig config) : base(config)
+		{
+		}
+	}
+
+	public abstract class CrudListViewModelBase<TModel, TManager> : CrudListViewModelBase<TModel, TManager, TModel> 
+		where TModel : class, IIdentity<int> 
+		where TManager : class, ICrudManager<TModel> 
+	{
+		public CrudListViewModelBase(CrudListConfig config) 
+			: base(config)
+		{
+		}
+
+		protected override IEnumerable<TModel> GetItemsSource()
+		{
+			return Manager.Query.ToList();
+		}
+	}
+
+	public abstract  class CrudListViewModelBase<TModel> : CrudListViewModelBase<TModel, ICrudManager<TModel>>
+		where TModel : class, IIdentity<int> 
+	{
+		public CrudListViewModelBase(CrudListConfig config)
+			: base(config)
+		{
 		}
 	}
 }

@@ -1,9 +1,14 @@
 namespace Rosengineering.Desktop.ViewModels
 {
-	public class ModelEditorParameter
+	public class ModelEditorParameter<TKey>
 	{
-		public object Id { get; set; }
+		public TKey Id { get; set; }
 
 		public bool IsNew { get; set; }
+	}
+
+	public class ModelEditorParameter : ModelEditorParameter<int>
+	{
+		
 	}
 }

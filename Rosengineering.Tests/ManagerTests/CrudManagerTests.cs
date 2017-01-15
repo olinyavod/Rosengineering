@@ -8,6 +8,7 @@ using Rosengineering.BusinessLogic;
 using Rosengineering.DAL;
 using Rosengineering.DAL.Models;
 using Rosengineering.Desktop;
+using Rosengineering.Desktop.IoCModules;
 
 namespace Rosengineering.Tests.ManagerTests
 {

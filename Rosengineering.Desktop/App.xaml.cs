@@ -6,6 +6,7 @@ using DevExpress.Mvvm;
 using DevExpress.Mvvm.UI;
 using Microsoft.Practices.ServiceLocation;
 using Rosengineering.DAL;
+using Rosengineering.Desktop.IoCModules;
 using Rosengineering.Desktop.Services;
 
 namespace Rosengineering.Desktop

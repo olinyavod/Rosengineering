@@ -129,15 +129,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="IoCModules\BusinessLogicModule.cs" />
+    <Compile Include="IoCModules\Mapping.cs" />
     <Compile Include="Services\AutofacViewLocator.cs" />
     <Compile Include="Services\AutofacViewModelLocator.cs" />
     <Compile Include="Services\IoCExtensions.cs" />
     <Compile Include="Services\ViewInfo.cs" />
     <Compile Include="Services\ViewModelExtensions.cs" />
     <Compile Include="Services\ViewModelInfo.cs" />
+    <Compile Include="Themes\LeftMarginMultiplierConverter.cs" />
+    <Compile Include="Themes\TreeViewItemExtensions.cs" />
+    <Compile Include="ViewModels\CrudListConfig.cs" />
     <Compile Include="ViewModels\CrudListViewModelBase.cs" />
     <Compile Include="ViewModels\ModelEditorParameter.cs" />
-    <Compile Include="ViewsModule.cs" />
+    <Compile Include="ViewModels\ModelEditorViewModelBase.cs" />
+    <Compile Include="ViewModels\UserEditorViewModel.cs" />
+    <Compile Include="ViewModels\UsersCrudListViewModel.cs" />
+    <Compile Include="IoCModules\ViewsModule.cs" />
+    <Compile Include="Views\UserView.xaml.cs">
+      <DependentUpon>UserView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Themes\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -146,11 +161,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DesktopModule.cs" />
+    <Compile Include="IoCModules\DesktopModule.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\UserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -190,7 +209,9 @@
       <Name>Rosengineering.DAL</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Behaviors\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

@@ -12,7 +12,7 @@ namespace Rosengineering.DAL.Models
 
 		public int UserGroupId { get; set; }
 
-		public UserGroup UserGroup { get; set; }
+		public virtual UserGroup UserGroup { get; set; }
 
 	}
 }

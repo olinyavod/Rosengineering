@@ -64,6 +64,12 @@ namespace Rosengineering.BusinessLogic
 			}
 		}
 
+		protected bool IsAttached(TModel model)
+		{
+			return _context.Set<TModel>().Local.Any(e => e == model);
+		}
+		
+
 		public virtual ModifyStatus<TModel> Update(TModel model)
 		{
 			try
@@ -71,6 +77,8 @@ namespace Rosengineering.BusinessLogic
 				var validationResult = _validator.Validate(model).ToValidStatus<TModel>();
 				if (!validationResult.IsValid)
 					return validationResult;
+				if (!IsAttached(model))
+					_context.Set<TModel>().Attach(model);
 				_context.SaveChanges();
 				return new ModifyStatus<TModel>
 				{
@@ -90,6 +98,8 @@ namespace Rosengineering.BusinessLogic
 				var validationResult = (await _validator.ValidateAsync(model)).ToValidStatus<TModel>();
 				if (!validationResult.IsValid)
 					return validationResult;
+				if (!IsAttached(model))
+					_context.Set<TModel>().Attach(model);
 				await _context.SaveChangesAsync();
 				return new ModifyStatus<TModel>
 				{

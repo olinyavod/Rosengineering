@@ -117,6 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="btnAdd" xml:space="preserve">
+    <value>Добавить...</value>
+  </data>
+  <data name="btnCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="btnDelete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="btnDetails" xml:space="preserve">
+    <value>Подрабнее...</value>
+  </data>
+  <data name="btnOK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="clnFisrtName" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="clnLastName" xml:space="preserve">
+    <value>Фамилия</value>
+  </data>
+  <data name="clnUserGroup" xml:space="preserve">
+    <value>Группа</value>
+  </data>
   <data name="mnuEntities" xml:space="preserve">
     <value>Справочники</value>
   </data>
@@ -129,7 +153,14 @@
   <data name="mnuUserGroupsList" xml:space="preserve">
     <value>Группы...</value>
   </data>
+  <data name="msgClosingMessage" xml:space="preserve">
+    <value>Были сделаны изминения.
+Сохранить и закрыть?</value>
+  </data>
   <data name="msgDeleteItem" xml:space="preserve">
     <value>Удалить: {0}?</value>
+  </data>
+  <data name="ttlUsers" xml:space="preserve">
+    <value>Клиенты</value>
   </data>
 </root>

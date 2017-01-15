@@ -61,6 +61,78 @@ namespace Rosengineering.Desktop.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Добавить....
+        /// </summary>
+        public static string btnAdd {
+            get {
+                return ResourceManager.GetString("btnAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Cancel.
+        /// </summary>
+        public static string btnCancel {
+            get {
+                return ResourceManager.GetString("btnCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Удалить.
+        /// </summary>
+        public static string btnDelete {
+            get {
+                return ResourceManager.GetString("btnDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Подрабнее....
+        /// </summary>
+        public static string btnDetails {
+            get {
+                return ResourceManager.GetString("btnDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на OK.
+        /// </summary>
+        public static string btnOK {
+            get {
+                return ResourceManager.GetString("btnOK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Имя.
+        /// </summary>
+        public static string clnFisrtName {
+            get {
+                return ResourceManager.GetString("clnFisrtName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Фамилия.
+        /// </summary>
+        public static string clnLastName {
+            get {
+                return ResourceManager.GetString("clnLastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Группа.
+        /// </summary>
+        public static string clnUserGroup {
+            get {
+                return ResourceManager.GetString("clnUserGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Справочники.
         /// </summary>
         public static string mnuEntities {
@@ -97,11 +169,30 @@ namespace Rosengineering.Desktop.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Были сделаны изминения.
+        ///Сохранить и закрыть?.
+        /// </summary>
+        public static string msgClosingMessage {
+            get {
+                return ResourceManager.GetString("msgClosingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Удалить: {0}?.
         /// </summary>
         public static string msgDeleteItem {
             get {
                 return ResourceManager.GetString("msgDeleteItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Клиенты.
+        /// </summary>
+        public static string ttlUsers {
+            get {
+                return ResourceManager.GetString("ttlUsers", resourceCulture);
             }
         }
     }

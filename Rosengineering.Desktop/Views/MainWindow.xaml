@@ -4,8 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:props="clr-namespace:Rosengineering.Desktop.Properties"
+        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+        xmlns:viewModels="clr-namespace:Rosengineering.Desktop.ViewModels"
+        xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Style="{StaticResource WindowStyle}"
+        Title="{Binding DisplayTitle}"
+        Height="350" 
+        Width="525"
+        d:DataContext="{d:DesignInstance viewModels:UsersCrudListViewModel}"
+        DataContext="{dxmvvm:ViewModelSource viewModels:UsersCrudListViewModel}">
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:CurrentWindowService/>
+        <dxmvvm:WindowService WindowShowMode="Dialog" 
+                              WindowStartupLocation="CenterOwner"/>
+        <dxmvvm:DispatcherService/>
+        <dxmvvm:MessageBoxService/>
+    </dxmvvm:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -20,5 +35,34 @@
                 <MenuItem Header="{x:Static props:Resources.mnuUserGroupsList}"/>
             </MenuItem>
         </Menu>
+        <DataGrid Grid.Row="1" 
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  ItemsSource="{Binding ItemsSource}" 
+                  SelectedItem="{Binding SelectedItem}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding FirstName}"
+                                    Width="*"
+                                    Header="{x:Static props:Resources.clnFisrtName}"
+                                    SortMemberPath="FirstName"/>
+                <DataGridTextColumn Binding="{Binding LastName}"
+                                    Width="*"
+                                    Header="{x:Static props:Resources.clnLastName}"
+                                    SortMemberPath="LastName"/>
+                <DataGridTextColumn Binding="{Binding UserGroup.Title}"
+                                    Width="*"
+                                    Header="{x:Static props:Resources.clnUserGroup}"
+                                    SortMemberPath="UserGroup.Title"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="2" 
+                    Orientation="Horizontal">
+            <Button Command="{Binding AddCommand}"
+                    Content="{x:Static props:Resources.btnAdd}"/>
+            <Button Command="{Binding DeleteCommand}"
+                    Content="{x:Static props:Resources.btnDelete}"/>
+            <Button Command="{Binding DetailsCommand}"
+                    Content="{x:Static props:Resources.btnDelete}"/>
+        </StackPanel>
     </Grid>
 </Window>
