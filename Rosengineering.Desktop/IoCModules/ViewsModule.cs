@@ -10,7 +10,9 @@ namespace Rosengineering.Desktop.IoCModules
 		{
 			base.Load(builder);
 
-			builder.RegisterView<UserView>();
+			builder.RegisterView<UserEditorView>()
+				.RegisterView<UserGroupsListView>()
+				.RegisterView<UserGroupEditorView>();
 		}
 	}
 }

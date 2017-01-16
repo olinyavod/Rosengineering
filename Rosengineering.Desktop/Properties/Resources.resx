@@ -121,7 +121,7 @@
     <value>Добавить...</value>
   </data>
   <data name="btnCancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Отмена</value>
   </data>
   <data name="btnDelete" xml:space="preserve">
     <value>Удалить</value>
@@ -132,6 +132,9 @@
   <data name="btnOK" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="clnBirthday" xml:space="preserve">
+    <value>Дата рождения</value>
+  </data>
   <data name="clnFisrtName" xml:space="preserve">
     <value>Имя</value>
   </data>
@@ -140,6 +143,18 @@
   </data>
   <data name="clnUserGroup" xml:space="preserve">
     <value>Группа</value>
+  </data>
+  <data name="lblBirthday" xml:space="preserve">
+    <value>Дата рождения:</value>
+  </data>
+  <data name="lblFisrtName" xml:space="preserve">
+    <value>Имя:</value>
+  </data>
+  <data name="lblLastName" xml:space="preserve">
+    <value>Фамилия:</value>
+  </data>
+  <data name="lblUserGroup" xml:space="preserve">
+    <value>Группа:</value>
   </data>
   <data name="mnuEntities" xml:space="preserve">
     <value>Справочники</value>
@@ -159,6 +174,21 @@
   </data>
   <data name="msgDeleteItem" xml:space="preserve">
     <value>Удалить: {0}?</value>
+  </data>
+  <data name="ttlAddUser" xml:space="preserve">
+    <value>Добавить клиента...</value>
+  </data>
+  <data name="ttlAdUserGroup" xml:space="preserve">
+    <value>Добавить группу...</value>
+  </data>
+  <data name="ttlEditUser" xml:space="preserve">
+    <value>Именить клиента...</value>
+  </data>
+  <data name="ttlEditUserGroup" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ttlUserGroups" xml:space="preserve">
+    <value>Группы</value>
   </data>
   <data name="ttlUsers" xml:space="preserve">
     <value>Клиенты</value>

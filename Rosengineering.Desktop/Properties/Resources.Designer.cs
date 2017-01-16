@@ -70,7 +70,7 @@ namespace Rosengineering.Desktop.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Cancel.
+        ///   Ищет локализованную строку, похожую на Отмена.
         /// </summary>
         public static string btnCancel {
             get {
@@ -106,6 +106,15 @@ namespace Rosengineering.Desktop.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Дата рождения.
+        /// </summary>
+        public static string clnBirthday {
+            get {
+                return ResourceManager.GetString("clnBirthday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Имя.
         /// </summary>
         public static string clnFisrtName {
@@ -129,6 +138,42 @@ namespace Rosengineering.Desktop.Properties {
         public static string clnUserGroup {
             get {
                 return ResourceManager.GetString("clnUserGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Дата рождения:.
+        /// </summary>
+        public static string lblBirthday {
+            get {
+                return ResourceManager.GetString("lblBirthday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Имя:.
+        /// </summary>
+        public static string lblFisrtName {
+            get {
+                return ResourceManager.GetString("lblFisrtName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Фамилия:.
+        /// </summary>
+        public static string lblLastName {
+            get {
+                return ResourceManager.GetString("lblLastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Группа:.
+        /// </summary>
+        public static string lblUserGroup {
+            get {
+                return ResourceManager.GetString("lblUserGroup", resourceCulture);
             }
         }
         
@@ -184,6 +229,51 @@ namespace Rosengineering.Desktop.Properties {
         public static string msgDeleteItem {
             get {
                 return ResourceManager.GetString("msgDeleteItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Добавить клиента....
+        /// </summary>
+        public static string ttlAddUser {
+            get {
+                return ResourceManager.GetString("ttlAddUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Добавить группу....
+        /// </summary>
+        public static string ttlAdUserGroup {
+            get {
+                return ResourceManager.GetString("ttlAdUserGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Именить клиента....
+        /// </summary>
+        public static string ttlEditUser {
+            get {
+                return ResourceManager.GetString("ttlEditUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string ttlEditUserGroup {
+            get {
+                return ResourceManager.GetString("ttlEditUserGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Группы.
+        /// </summary>
+        public static string ttlUserGroups {
+            get {
+                return ResourceManager.GetString("ttlUserGroups", resourceCulture);
             }
         }
         

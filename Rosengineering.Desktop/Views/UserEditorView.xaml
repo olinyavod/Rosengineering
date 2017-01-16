@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Rosengineering.Desktop.Views.UserView"
+﻿<UserControl x:Class="Rosengineering.Desktop.Views.UserEditorView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,11 +6,21 @@
              xmlns:local="clr-namespace:Rosengineering.Desktop.Views"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:viewModels="clr-namespace:Rosengineering.Desktop.ViewModels"
+             xmlns:props="clr-namespace:Rosengineering.Desktop.Properties"
              mc:Ignorable="d" 
+             Padding="10"
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance viewModels:UserEditorViewModel}"
              DataContext="{dxmvvm:ViewModelSource viewModels:UserEditorViewModel}">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        
+    </UserControl.Resources>
     <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:MessageBoxService/>
         <dxmvvm:CurrentWindowService ClosingCommand="{Binding ClosingCommand}"/>
     </dxmvvm:Interaction.Behaviors>
     <Grid>
@@ -23,33 +33,49 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Label Content="Имя:"/>
+        <Label Content="{x:Static props:Resources.lblFisrtName}"/>
         <TextBox Grid.Row="0"
                  Grid.Column="1"
+                 Style="{StaticResource EditTextBoxStyle}"
                  Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         <Label Grid.Row="1"
                Grid.Column="0" 
-               Content="Фамилия:"/>
+               Content="{x:Static props:Resources.lblLastName}"/>
         <TextBox Grid.Row="1"
+                 Style="{StaticResource EditTextBoxStyle}"
                  Grid.Column="1"
                  Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         <Label Grid.Row="2"
                Grid.Column="0" 
-               Content="Даьа рождения:"/>
+               Content="{x:Static props:Resources.lblBirthday}"/>
         <DatePicker Grid.Row="2"
                     Grid.Column="1"
-                    Foreground="White"
+                    Style="{StaticResource EditDatePickerStyle}"
                     SelectedDate="{Binding Birthday, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         <Label Grid.Row="3"
                Grid.Column="0" 
-               Content="Группа:"/>
+               Content="{x:Static props:Resources.lblUserGroup}"/>
         <ComboBox Grid.Row="3"
+                  Style="{StaticResource EditComboBoxStyle}"
                  Grid.Column="1"
                   SelectedValuePath="Id"
                   ItemsSource="{Binding UserGroupsSource}"
                   DisplayMemberPath="Title"
                   SelectedItem="{Binding UserGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
                  SelectedValue="{Binding UserGroupId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <StackPanel Grid.Row="4"
+                    Grid.Column="0" 
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+            <Button Command="{Binding SaveCommand}"
+                    IsDefault="True"
+                    Content="{x:Static props:Resources.btnOK}"/>
+            <Button IsCancel="True"
+                    Command="{Binding CancelCommand}"
+                    Content="{x:Static props:Resources.btnCancel}"/>
+        </StackPanel>
     </Grid>
 </UserControl>

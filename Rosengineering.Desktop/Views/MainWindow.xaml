@@ -7,62 +7,105 @@
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
         xmlns:viewModels="clr-namespace:Rosengineering.Desktop.ViewModels"
         xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
+        xmlns:messages="clr-namespace:Rosengineering.Desktop.Messages"
+        xmlns:behaviors="clr-namespace:Rosengineering.Desktop.Behaviors"
         mc:Ignorable="d"
-        Style="{StaticResource WindowStyle}"
         Title="{Binding DisplayTitle}"
         Height="350" 
         Width="525"
         d:DataContext="{d:DesignInstance viewModels:UsersCrudListViewModel}"
         DataContext="{dxmvvm:ViewModelSource viewModels:UsersCrudListViewModel}">
+    <Window.Resources>
+       
+    </Window.Resources>
     <dxmvvm:Interaction.Behaviors>
         <dxmvvm:CurrentWindowService/>
         <dxmvvm:WindowService WindowShowMode="Dialog" 
-                              WindowStartupLocation="CenterOwner"/>
+                              WindowStartupLocation="CenterOwner">
+            <dxmvvm:WindowService.WindowStyle>
+                <Style TargetType="{x:Type Window}">
+                    <Setter Property="SizeToContent" Value="WidthAndHeight"/>
+                    <Setter Property="Padding" Value="10"/>
+                </Style>
+            </dxmvvm:WindowService.WindowStyle>
+        </dxmvvm:WindowService>
         <dxmvvm:DispatcherService/>
         <dxmvvm:MessageBoxService/>
+        <dxmvvm:EventToCommand Command="{Binding OnLoadedCommand}"/>
+        <dxmvvm:DXSplashScreenService OwnerSearchMode="OwnerOnly"
+                                      ShowSplashScreenOnLoading="True"
+                                      SplashScreenStartupLocation="CenterOwner">
+            <dxmvvm:DXSplashScreenService.ViewTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="1"
+                            Padding="15"
+                            Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+                            BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}">
+                        <StackPanel Orientation="Vertical">
+                            <Label Content="Загрузка..."/>
+                            <ProgressBar IsIndeterminate="True"
+                                         Width="100"
+                                         Height="20"/>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </dxmvvm:DXSplashScreenService.ViewTemplate>
+        </dxmvvm:DXSplashScreenService>
     </dxmvvm:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Menu>
             <MenuItem Header="{x:Static props:Resources.mnuFile}">
                 <MenuItem Header="{x:Static props:Resources.mnuExit}"/>
             </MenuItem>
             <MenuItem Header="{x:Static props:Resources.mnuEntities}">
-                <MenuItem Header="{x:Static props:Resources.mnuUserGroupsList}"/>
+                <MenuItem Header="{x:Static props:Resources.mnuUserGroupsList}"
+                          Command="{Binding ShowUserGroupsCommand}"/>
             </MenuItem>
         </Menu>
-        <DataGrid Grid.Row="1" 
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True"
-                  ItemsSource="{Binding ItemsSource}" 
-                  SelectedItem="{Binding SelectedItem}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding FirstName}"
-                                    Width="*"
-                                    Header="{x:Static props:Resources.clnFisrtName}"
-                                    SortMemberPath="FirstName"/>
-                <DataGridTextColumn Binding="{Binding LastName}"
-                                    Width="*"
-                                    Header="{x:Static props:Resources.clnLastName}"
-                                    SortMemberPath="LastName"/>
-                <DataGridTextColumn Binding="{Binding UserGroup.Title}"
-                                    Width="*"
-                                    Header="{x:Static props:Resources.clnUserGroup}"
-                                    SortMemberPath="UserGroup.Title"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <StackPanel Grid.Row="2" 
-                    Orientation="Horizontal">
-            <Button Command="{Binding AddCommand}"
+        <ToolBarTray Grid.Row="1">
+            <ToolBar>
+                <Button Command="{Binding AddCommand}"
                     Content="{x:Static props:Resources.btnAdd}"/>
-            <Button Command="{Binding DeleteCommand}"
+                <Button Command="{Binding DeleteCommand}"
                     Content="{x:Static props:Resources.btnDelete}"/>
-            <Button Command="{Binding DetailsCommand}"
-                    Content="{x:Static props:Resources.btnDelete}"/>
-        </StackPanel>
+                <Button Command="{Binding DetailsCommand}"
+                    Content="{x:Static props:Resources.btnDetails}"/>
+            </ToolBar>
+        </ToolBarTray>
+        <xcdg:DataGridControl Grid.Row="2"
+                              MaxGroupLevels="0"
+                              AlternationCount="2"
+                              AutoCreateColumns="False"
+                              AllowDetailToggle="False"
+                              ReadOnly="True"
+                              IsRefreshCommandEnabled="True"
+                              SelectionMode="Single"
+                              SelectionUnit="Row"
+                              SelectedItem="{Binding SelectedItem}">
+            <dxmvvm:Interaction.Behaviors>
+                <behaviors:DataGridControlItemsSourceBehavior ItemsSource="{Binding ItemsSource}"
+                                                             RefreshDataMessage="{Binding RefreshMessage}"/>
+            </dxmvvm:Interaction.Behaviors>
+
+            <xcdg:DataGridControl.Columns>
+                <xcdg:Column Width="*"
+                             FieldName="FirstName"
+                             Title="{x:Static props:Resources.clnFisrtName}"/>
+                <xcdg:Column FieldName="LastName"
+                             Width="*"
+                             Title="{x:Static props:Resources.clnLastName}"/>
+                <xcdg:Column FieldName="Birthday"
+                             Width="*"
+                             Title="{x:Static props:Resources.clnUserGroup}"/>
+                <xcdg:Column FieldName="UserGroup.Title"
+                             Width="*"
+                             Title="{x:Static props:Resources.clnUserGroup}"/>
+            </xcdg:DataGridControl.Columns>
+        </xcdg:DataGridControl>
     </Grid>
 </Window>

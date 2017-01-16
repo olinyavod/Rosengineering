@@ -27,6 +27,8 @@ namespace Rosengineering.Desktop.ViewModels
 		{
 			_validationErrors = new Dictionary<string, string>();
 			PropertyChanged += OnPropertyChanged;
+			CancelCommand = new DelegateCommand(OnCancel, OnCanCancel);
+			SaveCommand = new AsyncCommand(OnSaveAsync, OnCanSave);
 			ClosingCommand = new AsyncCommand<CancelEventArgs>(OnClosing);
 		}
 
@@ -46,13 +48,13 @@ namespace Rosengineering.Desktop.ViewModels
 		public TModel Model
 		{
 			get { return GetProperty(() => Model); }
-			set { SetProperty(() => Model, value, OnModelChanged); }
+			set { SetProperty(() => Model, value, old => OnModelChanged(old, value)); }
 		}
 
-		protected virtual void OnModelChanged(TModel model)
+		protected virtual void OnModelChanged(TModel oldValue, TModel newValue)
 		{
 			this.Resolve<IMapper>()
-				.Map(model, this);
+				.Map(newValue, this);
 			IsChanged = false;
 		}
 
@@ -71,18 +73,23 @@ namespace Rosengineering.Desktop.ViewModels
 		public bool HasErrors
 		{
 			get { return GetProperty(() => HasErrors); }
-			set { SetProperty(() => HasErrors, value); }
+			set { SetProperty(() => HasErrors, value, old => OnHasErrorsChanged(old, value)); }
+		}
+
+		protected virtual void OnHasErrorsChanged(bool oldValue, bool newValue)
+		{
+
 		}
 
 		public bool IsChanged
 		{
 			get { return GetProperty(() => IsChanged); }
-			set { SetProperty(() => IsChanged, value, OnIsChangedOnChanged); }
+			set { SetProperty(() => IsChanged, value, old => OnIsChangedOnChanged(old, value)); }
 		}
 
-		protected virtual void OnIsChangedOnChanged(bool newValue)
+		protected virtual void OnIsChangedOnChanged(bool oldValue, bool newValue)
 		{
-			
+
 		}
 
 		public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
@@ -103,12 +110,12 @@ namespace Rosengineering.Desktop.ViewModels
 		public bool IsNew
 		{
 			get { return GetProperty(() => IsNew); }
-			set { SetProperty(() => IsNew, value, OnIsNewChanged); }
+			set { SetProperty(() => IsNew, value, oldValue => OnIsNewChanged(oldValue, value)); }
 		}
 
-		protected virtual void OnIsNewChanged(bool newValue)
+		protected virtual void OnIsNewChanged(bool oldValue, bool newValue)
 		{
-			
+
 		}
 
 		public string DisplayTitle
@@ -121,7 +128,7 @@ namespace Rosengineering.Desktop.ViewModels
 		{
 			base.OnParameterChanged(parameter);
 			var p = parameter as ModelEditorParameter<TKey>;
-			if(p == null) return;
+			if (p == null) return;
 
 			if (p.IsNew)
 			{
@@ -152,7 +159,9 @@ namespace Rosengineering.Desktop.ViewModels
 			if (IsChanged)
 			{
 				e.Cancel = true;
-				switch (GetService<IMessageBoxService>().Show(GetClosingMessage(), DisplayTitle, MessageBoxButton.YesNoCancel, MessageBoxImage.Question))
+				switch (
+					GetService<IMessageBoxService>()
+						.Show(GetClosingMessage(), DisplayTitle, MessageBoxButton.YesNoCancel, MessageBoxImage.Question))
 				{
 					case MessageBoxResult.Yes:
 						if (await SaveChangesAsync())
@@ -203,6 +212,35 @@ namespace Rosengineering.Desktop.ViewModels
 			IsChanged = false;
 			return true;
 		}
+
+		public ICommand SaveCommand { get; private set; }
+
+		protected virtual bool OnCanSave()
+		{
+			return IsChanged && !HasErrors;
+		}
+
+		protected virtual async Task OnSaveAsync()
+		{
+			if (await SaveChangesAsync())
+			{
+				GetService<ICurrentWindowService>().Close();
+			}
+		}
+
+		public ICommand CancelCommand { get; private set; }
+
+		protected virtual bool OnCanCancel()
+		{
+			return true;
+		}
+
+		protected virtual void OnCancel()
+		{
+			IsChanged = false;
+			GetService<ICurrentWindowService>().Close();
+		}
+
 	}
 
 	public abstract class ModelEditorViewModelBase<TModel, TManager> : ModelEditorViewModelBase<TModel,int, TManager> 

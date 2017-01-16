@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Rosengineering.Desktop.Views
 {
 	/// <summary>
-	/// Логика взаимодействия для UserView.xaml
+	/// Логика взаимодействия для UserGroupEditorView.xaml
 	/// </summary>
-	public partial class UserView : UserControl
+	public partial class UserGroupEditorView : UserControl
 	{
-		public UserView()
+		public UserGroupEditorView()
 		{
 			InitializeComponent();
 		}

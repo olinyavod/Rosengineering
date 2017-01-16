@@ -131,28 +131,31 @@
     </ApplicationDefinition>
     <Compile Include="IoCModules\BusinessLogicModule.cs" />
     <Compile Include="IoCModules\Mapping.cs" />
+    <Compile Include="Behaviors\DataGridControlItemsSourceBehavior.cs" />
+    <Compile Include="Messages\RefreshDataMessage.cs" />
     <Compile Include="Services\AutofacViewLocator.cs" />
     <Compile Include="Services\AutofacViewModelLocator.cs" />
     <Compile Include="Services\IoCExtensions.cs" />
     <Compile Include="Services\ViewInfo.cs" />
     <Compile Include="Services\ViewModelExtensions.cs" />
     <Compile Include="Services\ViewModelInfo.cs" />
-    <Compile Include="Themes\LeftMarginMultiplierConverter.cs" />
-    <Compile Include="Themes\TreeViewItemExtensions.cs" />
     <Compile Include="ViewModels\CrudListConfig.cs" />
     <Compile Include="ViewModels\CrudListViewModelBase.cs" />
     <Compile Include="ViewModels\ModelEditorParameter.cs" />
     <Compile Include="ViewModels\ModelEditorViewModelBase.cs" />
     <Compile Include="ViewModels\UserEditorViewModel.cs" />
+    <Compile Include="ViewModels\UserGroupsListViewModel.cs" />
     <Compile Include="ViewModels\UsersCrudListViewModel.cs" />
     <Compile Include="IoCModules\ViewsModule.cs" />
-    <Compile Include="Views\UserView.xaml.cs">
-      <DependentUpon>UserView.xaml</DependentUpon>
+    <Compile Include="Views\UserEditorView.xaml.cs">
+      <DependentUpon>UserEditorView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Themes\Styles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include="Views\UserGroupEditorView.xaml.cs">
+      <DependentUpon>UserGroupEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserGroupsListView.xaml.cs">
+      <DependentUpon>UserGroupsListView.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -166,7 +169,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\UserView.xaml">
+    <Page Include="Views\UserEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserGroupEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserGroupsListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -209,9 +220,7 @@
       <Name>Rosengineering.DAL</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Behaviors\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

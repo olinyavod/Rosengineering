@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using DevExpress.Mvvm;
+using DevExpress.Mvvm.Native;
 using Rosengineering.BusinessLogic;
 using Rosengineering.DAL.Models;
+using Rosengineering.Desktop.Messages;
 using Rosengineering.Desktop.Properties;
 using Rosengineering.Desktop.Services;
 
@@ -31,21 +33,31 @@ namespace Rosengineering.Desktop.ViewModels
 			RefreshCommand = new AsyncCommand(OnRefreshAsync);
 			DetailsCommand = new AsyncCommand(OnDetails, OnCanDetails);
 			AddCommand = new AsyncCommand(OnAdd, OnCanAdd);
+			OnLoadedCommand = new AsyncCommand(OnLoadedAsync);
 		}
 
-		protected override void OnParameterChanged(object parameter)
+		public ICommand OnLoadedCommand { get; private set; }
+
+		protected virtual Task OnLoadedAsync()
 		{
-			base.OnParameterChanged(parameter);
 			ItemsSource = GetItemsSource();
+			return Task.FromResult(true);
+
 		}
 
-		public IEnumerable<TItem> ItemsSource
+		public IQueryable<TItem> ItemsSource
 		{
 			get { return GetProperty(() => ItemsSource); }
 			set { SetProperty(() => ItemsSource, value); }
 		}
 
-		protected abstract IEnumerable<TItem> GetItemsSource();
+		public RefreshDataMessage RefreshMessage
+		{
+			get { return GetProperty(() => RefreshMessage); }
+			set { SetProperty(() => RefreshMessage, value); }
+		}
+
+		protected abstract IQueryable<TItem> GetItemsSource();
 
 		public TItem SelectedItem
 		{
@@ -106,7 +118,7 @@ namespace Rosengineering.Desktop.ViewModels
 
 		protected virtual Task OnRefreshAsync()
 		{
-			ItemsSource = GetItemsSource();
+			RefreshMessage = new RefreshDataMessage();
 			return Task.FromResult(true);
 		}
 
@@ -172,9 +184,9 @@ namespace Rosengineering.Desktop.ViewModels
 		{
 		}
 
-		protected override IEnumerable<TModel> GetItemsSource()
+		protected override IQueryable<TModel> GetItemsSource()
 		{
-			return Manager.Query.ToList();
+			return Manager.Query;
 		}
 	}
 
