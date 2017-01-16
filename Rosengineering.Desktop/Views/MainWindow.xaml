@@ -101,7 +101,7 @@
                              Title="{x:Static props:Resources.clnLastName}"/>
                 <xcdg:Column FieldName="Birthday"
                              Width="*"
-                             Title="{x:Static props:Resources.clnUserGroup}"/>
+                             Title="{x:Static props:Resources.clnBirthday}"/>
                 <xcdg:Column FieldName="UserGroup.Title"
                              Width="*"
                              Title="{x:Static props:Resources.clnUserGroup}"/>
