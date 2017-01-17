@@ -1,6 +1,9 @@
+using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using DevExpress.Mvvm;
 using Rosengineering.DAL.Models;
+using Rosengineering.Desktop.Behaviors;
 using Rosengineering.Desktop.Properties;
 using Rosengineering.Desktop.Views;
 
@@ -16,6 +19,7 @@ namespace Rosengineering.Desktop.ViewModels
 			})
 		{
 			ShowUserGroupsCommand = new DelegateCommand(OnShowUserGroups);
+			ExitCommand = new DelegateCommand(OnExit);
 		}
 
 		protected override string GetDeleteMessage(User item)
@@ -27,9 +31,38 @@ namespace Rosengineering.Desktop.ViewModels
 
 		void OnShowUserGroups()
 		{
-			var windowService = GetService<IWindowService>();
+			var windowService = GetService<IWindowServiceEx>();
 			windowService.Title = Resources.ttlUserGroups;
+			windowService.Size = new Size(300, 350);
 			windowService.Show(typeof(UserGroupsListView).Name, null, this);
+		}
+
+		public ICommand ExitCommand { get; private set; }
+
+		void OnExit()
+		{
+			GetService<ICurrentWindowService>().Close();
+		}
+
+		public string SearchTerm
+		{
+			get { return GetProperty(() => SearchTerm); }
+			set { SetProperty(() => SearchTerm, value, () => OnSearchTermChanged(value)); }
+		}
+
+		protected override IQueryable<User> GetItemsSource()
+		{
+			var users = base.GetItemsSource();
+			if (!string.IsNullOrWhiteSpace(SearchTerm))
+			{
+				users = users.Where(i => i.FirstName.Contains(SearchTerm) || i.LastName.Contains(SearchTerm));
+			}
+			return users;
+		}
+
+		private void OnSearchTermChanged(string value)
+		{
+			ItemsSource = GetItemsSource();
 		}
 	}
 }

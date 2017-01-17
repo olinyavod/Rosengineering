@@ -9,6 +9,7 @@
         xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
         xmlns:messages="clr-namespace:Rosengineering.Desktop.Messages"
         xmlns:behaviors="clr-namespace:Rosengineering.Desktop.Behaviors"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="{Binding DisplayTitle}"
         Height="350" 
@@ -20,7 +21,7 @@
     </Window.Resources>
     <dxmvvm:Interaction.Behaviors>
         <dxmvvm:CurrentWindowService/>
-        <dxmvvm:WindowService WindowShowMode="Dialog" 
+        <behaviors:WindowServiceEx WindowShowMode="Dialog" 
                               WindowStartupLocation="CenterOwner">
             <dxmvvm:WindowService.WindowStyle>
                 <Style TargetType="{x:Type Window}">
@@ -28,7 +29,7 @@
                     <Setter Property="Padding" Value="10"/>
                 </Style>
             </dxmvvm:WindowService.WindowStyle>
-        </dxmvvm:WindowService>
+        </behaviors:WindowServiceEx>
         <dxmvvm:DispatcherService/>
         <dxmvvm:MessageBoxService/>
         <dxmvvm:EventToCommand Command="{Binding OnLoadedCommand}"/>
@@ -42,9 +43,10 @@
                             Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
                             BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}">
                         <StackPanel Orientation="Vertical">
-                            <Label Content="Загрузка..."/>
+                            <Label Content="Загрузка..."
+                                   HorizontalAlignment="Center"/>
                             <ProgressBar IsIndeterminate="True"
-                                         Width="100"
+                                         Width="200"
                                          Height="20"/>
                         </StackPanel>
                     </Border>
@@ -56,11 +58,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Menu>
             <MenuItem Header="{x:Static props:Resources.mnuFile}">
-                <MenuItem Header="{x:Static props:Resources.mnuExit}"/>
+                <MenuItem Header="{x:Static props:Resources.mnuExit}"
+                          Command="{Binding ExitCommand}"/>
             </MenuItem>
             <MenuItem Header="{x:Static props:Resources.mnuEntities}">
                 <MenuItem Header="{x:Static props:Resources.mnuUserGroupsList}"
@@ -77,15 +81,14 @@
                     Content="{x:Static props:Resources.btnDetails}"/>
             </ToolBar>
         </ToolBarTray>
-        <xcdg:DataGridControl Grid.Row="2"
-                              MaxGroupLevels="0"
-                              AlternationCount="2"
-                              AutoCreateColumns="False"
-                              AllowDetailToggle="False"
-                              ReadOnly="True"
-                              IsRefreshCommandEnabled="True"
-                              SelectionMode="Single"
-                              SelectionUnit="Row"
+        <WrapPanel Grid.Row="2"
+                   ItemWidth="150">
+            <xctk:WatermarkTextBox Watermark="Поиск..."
+                                   Margin="5"
+                                   Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=300}"/>
+        </WrapPanel>
+        <xcdg:DataGridControl Grid.Row="3"
+                              Style="{StaticResource GridCotrolStyle}"
                               SelectedItem="{Binding SelectedItem}">
             <dxmvvm:Interaction.Behaviors>
                 <behaviors:DataGridControlItemsSourceBehavior ItemsSource="{Binding ItemsSource}"
@@ -109,3 +112,4 @@
         </xcdg:DataGridControl>
     </Grid>
 </Window>
+

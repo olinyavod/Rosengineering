@@ -129,6 +129,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\IWindowServiceEx.cs" />
+    <Compile Include="Behaviors\WindowServiceEx.cs" />
     <Compile Include="IoCModules\BusinessLogicModule.cs" />
     <Compile Include="IoCModules\Mapping.cs" />
     <Compile Include="Behaviors\DataGridControlItemsSourceBehavior.cs" />
@@ -144,6 +146,7 @@
     <Compile Include="ViewModels\ModelEditorParameter.cs" />
     <Compile Include="ViewModels\ModelEditorViewModelBase.cs" />
     <Compile Include="ViewModels\UserEditorViewModel.cs" />
+    <Compile Include="ViewModels\UserGroupEditorViewModel.cs" />
     <Compile Include="ViewModels\UserGroupsListViewModel.cs" />
     <Compile Include="ViewModels\UsersCrudListViewModel.cs" />
     <Compile Include="IoCModules\ViewsModule.cs" />

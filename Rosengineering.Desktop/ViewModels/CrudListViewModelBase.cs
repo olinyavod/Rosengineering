@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using DevExpress.Mvvm;
-using DevExpress.Mvvm.Native;
 using Rosengineering.BusinessLogic;
 using Rosengineering.DAL.Models;
 using Rosengineering.Desktop.Messages;

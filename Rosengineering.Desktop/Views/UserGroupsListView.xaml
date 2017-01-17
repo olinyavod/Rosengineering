@@ -6,15 +6,71 @@
              xmlns:local="clr-namespace:Rosengineering.Desktop.Views"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:viewModels="clr-namespace:Rosengineering.Desktop.ViewModels"
+             xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
+             xmlns:models="clr-namespace:Rosengineering.DAL.Models;assembly=Rosengineering.DAL"
+             xmlns:behaviors="clr-namespace:Rosengineering.Desktop.Behaviors"
+             xmlns:props="clr-namespace:Rosengineering.Desktop.Properties"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch"
              d:DesignHeight="300" d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance viewModels:UserGroupsListViewModel}"
              DataContext="{dxmvvm:ViewModelSource viewModels:UserGroupsListViewModel}">
+    <UserControl.Resources>
+        
+    </UserControl.Resources>
     <dxmvvm:Interaction.Behaviors>
         <dxmvvm:CurrentWindowService/>
         <dxmvvm:MessageBoxService/>
+        <behaviors:WindowServiceEx WindowShowMode="Dialog"
+                                   WindowStartupLocation="CenterOwner">
+            <behaviors:WindowServiceEx.WindowStyle>
+                <Style TargetType="{x:Type Window}">
+                    <Setter Property="SizeToContent" Value="WidthAndHeight"/>
+                </Style>
+            </behaviors:WindowServiceEx.WindowStyle>
+        </behaviors:WindowServiceEx>
         <dxmvvm:EventToCommand Command="{Binding OnLoadedCommand}"/>
     </dxmvvm:Interaction.Behaviors>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ToolBarTray>
+            <ToolBar>
+                <Button Command="{Binding AddCommand}"
+                    Content="{x:Static props:Resources.btnAdd}"/>
+                <Button Command="{Binding DeleteCommand}"
+                    Content="{x:Static props:Resources.btnDelete}"/>
+                <Button Command="{Binding DetailsCommand}"
+                    Content="{x:Static props:Resources.btnDetails}"/>
+            </ToolBar>
+        </ToolBarTray>
+        <WrapPanel Grid.Row="1"
+                   ItemWidth="150">
+            <xctk:WatermarkTextBox Watermark="Поиск..."
+                                   Margin="5"
+                                   Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=300}"/>
+        </WrapPanel>
+        <xcdg:DataGridControl Grid.Row="2"
+                              Style="{StaticResource GridCotrolStyle}"
+                              SelectedItem="{Binding SelectedItem}">
+            <dxmvvm:Interaction.Behaviors>
+                <behaviors:DataGridControlItemsSourceBehavior ItemsSource="{Binding ItemsSource}"
+                                                             RefreshDataMessage="{Binding RefreshMessage}"/>
+            </dxmvvm:Interaction.Behaviors>
+
+            <xcdg:DataGridControl.Columns>
+                <xcdg:Column Width="25"
+                             FieldName="Id"
+                             Title="{x:Static props:Resources.clnId}"/>
+                <xcdg:Column FieldName="Title"
+                             Width="*"
+                             Title="{x:Static props:Resources.clnTitle}"/>
+            </xcdg:DataGridControl.Columns>
+        </xcdg:DataGridControl>
     </Grid>
 </UserControl>

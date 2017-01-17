@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -76,9 +77,13 @@ namespace Rosengineering.BusinessLogic
 			{
 				var validationResult = _validator.Validate(model).ToValidStatus<TModel>();
 				if (!validationResult.IsValid)
+				{
+					var entry = _context.ChangeTracker.Entries<TModel>()
+						.FirstOrDefault(e => model == e.Entity);
+					if (entry != null)
+						entry.State = EntityState.Unchanged;
 					return validationResult;
-				if (!IsAttached(model))
-					_context.Set<TModel>().Attach(model);
+				}
 				_context.SaveChanges();
 				return new ModifyStatus<TModel>
 				{
@@ -97,9 +102,13 @@ namespace Rosengineering.BusinessLogic
 			{
 				var validationResult = (await _validator.ValidateAsync(model)).ToValidStatus<TModel>();
 				if (!validationResult.IsValid)
+				{
+					var entry = _context.ChangeTracker.Entries<TModel>()
+						.FirstOrDefault(e => model == e.Entity);
+					if(entry != null)
+					entry.State = EntityState.Unchanged;
 					return validationResult;
-				if (!IsAttached(model))
-					_context.Set<TModel>().Attach(model);
+				}
 				await _context.SaveChangesAsync();
 				return new ModifyStatus<TModel>
 				{

@@ -15,6 +15,9 @@ namespace Rosengineering.Desktop.IoCModules
 		{
 			CreateMap<UserEditorViewModel, User>()
 				.ReverseMap();
+
+			CreateMap<UserGroupEditorViewModel, UserGroup>()
+				.ReverseMap();
 		}
 	}
 }

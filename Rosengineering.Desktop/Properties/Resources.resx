@@ -193,4 +193,10 @@
   <data name="ttlUsers" xml:space="preserve">
     <value>Клиенты</value>
   </data>
+  <data name="clnId" xml:space="preserve">
+    <value>ИД</value>
+  </data>
+  <data name="clnTitle" xml:space="preserve">
+    <value>Название</value>
+  </data>
 </root>

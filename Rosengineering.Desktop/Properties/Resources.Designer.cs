@@ -124,11 +124,29 @@ namespace Rosengineering.Desktop.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на ИД.
+        /// </summary>
+        public static string clnId {
+            get {
+                return ResourceManager.GetString("clnId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Фамилия.
         /// </summary>
         public static string clnLastName {
             get {
                 return ResourceManager.GetString("clnLastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Название.
+        /// </summary>
+        public static string clnTitle {
+            get {
+                return ResourceManager.GetString("clnTitle", resourceCulture);
             }
         }
         

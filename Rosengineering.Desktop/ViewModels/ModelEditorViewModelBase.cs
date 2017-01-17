@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Dynamic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -11,7 +10,6 @@ using DevExpress.Mvvm;
 using Rosengineering.BusinessLogic;
 using Rosengineering.DAL.Models;
 using Rosengineering.Desktop.Services;
-using Xceed.Wpf.AvalonDock.Properties;
 
 namespace Rosengineering.Desktop.ViewModels
 {

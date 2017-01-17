@@ -4,9 +4,50 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Rosengineering.Desktop.Views"
+             Padding="10"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:props="clr-namespace:Rosengineering.Desktop.Properties"
+             xmlns:viewModels="clr-namespace:Rosengineering.Desktop.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             DataContext="{dxmvvm:ViewModelSource viewModels:UserGroupEditorViewModel}"
+             d:DataContext="{d:DesgnInstance viewModels:UserGroupEditorViewModel}">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+
+    </UserControl.Resources>
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:MessageBoxService/>
+        <dxmvvm:CurrentWindowService ClosingCommand="{Binding ClosingCommand}"/>
+    </dxmvvm:Interaction.Behaviors>
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Content="{x:Static props:Resources.lblFisrtName}"/>
+        <TextBox Grid.Row="0"
+                 Grid.Column="1"
+                 Style="{StaticResource EditTextBoxStyle}"
+                 Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+        <StackPanel Grid.Row="2"
+                    Grid.Column="0" 
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+            <Button Command="{Binding SaveCommand}"
+                    IsDefault="True"
+                    Content="{x:Static props:Resources.btnOK}"/>
+            <Button IsCancel="True"
+                    Command="{Binding CancelCommand}"
+                    Content="{x:Static props:Resources.btnCancel}"/>
+        </StackPanel>
     </Grid>
 </UserControl>
