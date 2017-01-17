@@ -74,6 +74,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ListItems\UserItem.cs" />
     <Compile Include="Validators\UserGroupValidator.cs" />
     <Compile Include="Validators\UserValidator.cs" />
   </ItemGroup>

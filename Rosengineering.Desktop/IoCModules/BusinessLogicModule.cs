@@ -1,6 +1,7 @@
 using Autofac;
 using FluentValidation;
 using Rosengineering.BusinessLogic;
+using Rosengineering.BusinessLogic.ListItems;
 using Rosengineering.BusinessLogic.Managers;
 using Rosengineering.BusinessLogic.Validators;
 using Rosengineering.DAL.Models;
@@ -22,7 +23,7 @@ namespace Rosengineering.Desktop.IoCModules
 				.SingleInstance();
 
 			builder.RegisterType<UserCrudManager>()
-				.As<ICrudManager<User>>()
+				.As<ICrudManager<User, UserItem>>()
 				.SingleInstance();
 
 			builder.RegisterType<UserGroupCrudManager>()

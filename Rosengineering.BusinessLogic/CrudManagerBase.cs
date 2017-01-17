@@ -9,7 +9,9 @@ using Rosengineering.DAL.Models;
 
 namespace Rosengineering.BusinessLogic
 {
-	public abstract class CrudManagerBase<TModel, TKey> : ICrudManager<TModel, TKey> where TModel : class, IIdentity<TKey>
+	public abstract class CrudManagerBase<TModel, TItem, TKey> : ICrudManager<TModel, TItem, TKey>
+		where TModel : class, IIdentity<TKey> 
+		where TItem : class, IIdentity<TKey>
 	{
 		private readonly IValidator<TModel> _validator;
 		private readonly RosengineeringDbContext _context;
@@ -20,11 +22,8 @@ namespace Rosengineering.BusinessLogic
 			_context = context;
 		}
 
-		protected virtual IQueryable<TModel> GetQuery()
-		{
-			return _context.Set<TModel>();
-		}
-
+		protected abstract IQueryable<TItem> GetQuery();
+		
 		public virtual ModifyStatus<TModel> Add(TModel model)
 		{
 			try
@@ -64,12 +63,6 @@ namespace Rosengineering.BusinessLogic
 				return ex.ToStatus<ModifyStatus<TModel>>();
 			}
 		}
-
-		protected bool IsAttached(TModel model)
-		{
-			return _context.Set<TModel>().Local.Any(e => e == model);
-		}
-		
 
 		public virtual ModifyStatus<TModel> Update(TModel model)
 		{
@@ -185,16 +178,34 @@ namespace Rosengineering.BusinessLogic
 			}
 		}
 
-		public IQueryable<TModel> Query => GetQuery();
+		public IQueryable<TItem> Query => GetQuery();
 		
 	}
 
-	public abstract class CrudManagerBase<TModel> : CrudManagerBase<TModel, int>, ICrudManager<TModel>
-		where TModel : class, IIdentity<int>
+	public abstract class CrudManagerBase<TModel, TItem> : CrudManagerBase<TModel, TItem, int>, ICrudManager<TModel, TItem>
+		where TModel : class, IIdentity<int> 
+		where TItem : class, IIdentity<int>
 	{
 		protected CrudManagerBase(IValidator<TModel> validator, RosengineeringDbContext context) 
 			: base(validator, context)
 		{
+		}
+	}
+
+	public class CrudManagerBase<TModel> : CrudManagerBase<TModel, TModel>, ICrudManager<TModel>
+		where TModel : class, IIdentity<int>
+	{
+		private readonly RosengineeringDbContext _context;
+
+		public CrudManagerBase(IValidator<TModel> validator, RosengineeringDbContext context)
+			: base(validator, context)
+		{
+			_context = context;
+		}
+
+		protected override IQueryable<TModel> GetQuery()
+		{
+			return _context.Set<TModel>();
 		}
 	}
 }

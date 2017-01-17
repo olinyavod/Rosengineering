@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Rosengineering.BusinessLogic;
+using Rosengineering.BusinessLogic.ListItems;
 using Rosengineering.DAL.Models;
 using Rosengineering.Desktop.Services;
 
 namespace Rosengineering.Desktop.ViewModels
 {
-	public class UserEditorViewModel : ModelEditorViewModelBase<User>
+	public class UserEditorViewModel : ModelEditorViewModelBase<User, UserItem>
 	{
 		protected override void OnParameterChanged(object parameter)
 		{

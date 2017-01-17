@@ -4,8 +4,9 @@ using Rosengineering.DAL.Models;
 
 namespace Rosengineering.BusinessLogic
 {
-    public interface ICrudManager<TModel, TKey>
+	public interface ICrudManager<TModel, TItem, TKey>
 		where TModel : class, IIdentity<TKey>
+		where TItem : class, IIdentity<TKey>
     {
 	    ModifyStatus<TModel> Add(TModel model);
 
@@ -23,10 +24,17 @@ namespace Rosengineering.BusinessLogic
 
 	    Task<ExecuteStatus<TModel>> GetAsync(TKey id);
 
-		IQueryable<TModel> Query { get; }
+		IQueryable<TItem> Query { get; }
     }
 
-	public interface ICrudManager<TModel> : ICrudManager<TModel, int> 
+	public interface ICrudManager<TModel, TItem> : ICrudManager<TModel, TItem, int> 
+		where TModel : class, IIdentity<int> 
+		where TItem : class, IIdentity<int>
+	{
+		
+	}
+
+	public interface ICrudManager<TModel> : ICrudManager<TModel, TModel> 
 		where TModel : class, IIdentity<int>
 	{
 		

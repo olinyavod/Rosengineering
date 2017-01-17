@@ -105,7 +105,7 @@
                 <xcdg:Column FieldName="Birthday"
                              Width="*"
                              Title="{x:Static props:Resources.clnBirthday}"/>
-                <xcdg:Column FieldName="UserGroup.Title"
+                <xcdg:Column FieldName="UserGroupTitle"
                              Width="*"
                              Title="{x:Static props:Resources.clnUserGroup}"/>
             </xcdg:DataGridControl.Columns>

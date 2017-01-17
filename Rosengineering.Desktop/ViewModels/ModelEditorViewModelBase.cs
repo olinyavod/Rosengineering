@@ -13,9 +13,10 @@ using Rosengineering.Desktop.Services;
 
 namespace Rosengineering.Desktop.ViewModels
 {
-	public abstract class ModelEditorViewModelBase<TModel, TKey, TManager> : ViewModelBase, INotifyDataErrorInfo
+	public abstract class ModelEditorViewModelBase<TModel, TItem, TKey, TManager> : ViewModelBase, INotifyDataErrorInfo
 		where TModel : class, IIdentity<TKey>
-		where TManager : class, ICrudManager<TModel, TKey>
+		where TManager : class, ICrudManager<TModel, TItem, TKey>
+		where TItem : class, IIdentity<TKey>
 	{
 		private readonly IDictionary<string, string> _validationErrors;
 
@@ -241,13 +242,20 @@ namespace Rosengineering.Desktop.ViewModels
 
 	}
 
-	public abstract class ModelEditorViewModelBase<TModel, TManager> : ModelEditorViewModelBase<TModel,int, TManager> 
+	public abstract class ModelEditorViewModelBase<TModel, TItem, TManager> : ModelEditorViewModelBase<TModel, TItem, int, TManager> 
 		where TModel : class, IIdentity<int>
-		where TManager : class, ICrudManager<TModel, int>
+		where TManager : class, ICrudManager<TModel, TItem, int>
+		where TItem : class, IIdentity<int>
 	{
 	}
 
-	public class ModelEditorViewModelBase<TModel> : ModelEditorViewModelBase<TModel, ICrudManager<TModel>> 
+	public class ModelEditorViewModelBase<TModel, TItem> : ModelEditorViewModelBase<TModel, TItem, ICrudManager<TModel, TItem>> 
+		where TModel : class, IIdentity<int> 
+		where TItem : class, IIdentity<int>
+	{
+	}
+
+	public class ModelEditorViewModelBase<TModel> : ModelEditorViewModelBase<TModel, TModel, ICrudManager<TModel>>
 		where TModel : class, IIdentity<int>
 	{
 	}

@@ -15,7 +15,7 @@ namespace Rosengineering.Desktop.ViewModels
 	public abstract  class CrudListViewModelBase<TModel, TManager, TItem, TKey> : ViewModelBase
 		where TModel : class, IIdentity<TKey>
 		where TItem : class, IIdentity<TKey>
-		where TManager : class, ICrudManager<TModel, TKey>
+		where TManager : class, ICrudManager<TModel, TItem, TKey>
 	{
 		public  TManager Manager
 		{
@@ -55,7 +55,10 @@ namespace Rosengineering.Desktop.ViewModels
 			set { SetProperty(() => RefreshMessage, value); }
 		}
 
-		protected abstract IQueryable<TItem> GetItemsSource();
+		protected virtual IQueryable<TItem> GetItemsSource()
+		{
+			return Manager.Query;
+		}
 
 		public TItem SelectedItem
 		{
@@ -163,9 +166,10 @@ namespace Rosengineering.Desktop.ViewModels
 		}
 	}
 
-	public abstract class CrudListViewModelBase<TModel, TManager, TItem> : CrudListViewModelBase<TModel, TManager, TItem, int> 
+	public abstract class CrudListViewModelBase<TModel, TManager, TItem> 
+		: CrudListViewModelBase<TModel, TManager, TItem, int> 
 		where TModel : class, IIdentity<int> 
-		where TManager : class, ICrudManager<TModel> 
+		where TManager : class, ICrudManager<TModel, TItem> 
 		where TItem : class, IIdentity<int>
 	{
 		protected CrudListViewModelBase(CrudListConfig config) : base(config)
@@ -177,7 +181,7 @@ namespace Rosengineering.Desktop.ViewModels
 		where TModel : class, IIdentity<int> 
 		where TManager : class, ICrudManager<TModel> 
 	{
-		public CrudListViewModelBase(CrudListConfig config) 
+		protected CrudListViewModelBase(CrudListConfig config) 
 			: base(config)
 		{
 		}
@@ -191,7 +195,7 @@ namespace Rosengineering.Desktop.ViewModels
 	public abstract  class CrudListViewModelBase<TModel> : CrudListViewModelBase<TModel, ICrudManager<TModel>>
 		where TModel : class, IIdentity<int> 
 	{
-		public CrudListViewModelBase(CrudListConfig config)
+		protected CrudListViewModelBase(CrudListConfig config)
 			: base(config)
 		{
 		}
