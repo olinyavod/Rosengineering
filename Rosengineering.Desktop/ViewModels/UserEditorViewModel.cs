@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
+using System.Windows.Input;
+using DevExpress.Mvvm;
 using Rosengineering.BusinessLogic;
 using Rosengineering.BusinessLogic.ListItems;
 using Rosengineering.DAL.Models;
+using Rosengineering.Desktop.Behaviors;
 using Rosengineering.Desktop.Services;
+using Rosengineering.Desktop.Views;
 
 namespace Rosengineering.Desktop.ViewModels
 {
@@ -57,6 +62,20 @@ namespace Rosengineering.Desktop.ViewModels
 		{
 			get { return GetProperty(() => Birthday); }
 			set { SetProperty(() => Birthday, value); }
+		}
+
+		public ICommand ShowPhotoEditorCommand => new DelegateCommand(OnShowPhotoEditor, OnCanShowPhotoEditor);
+
+		private bool OnCanShowPhotoEditor()
+		{
+			return !IsNew;
+		}
+
+		private void OnShowPhotoEditor()
+		{
+			var window = GetService<IWindowServiceEx>();
+			window.Size = new Size(600, 500);
+			window.Show(typeof(PhotoEditorView).Name, null, this);
 		}
 	}
 }

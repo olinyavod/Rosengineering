@@ -12,7 +12,8 @@ namespace Rosengineering.Desktop.IoCModules
 
 			builder.RegisterView<UserEditorView>()
 				.RegisterView<UserGroupsListView>()
-				.RegisterView<UserGroupEditorView>();
+				.RegisterView<UserGroupEditorView>()
+				.RegisterView<PhotoEditorView>();
 		}
 	}
 }

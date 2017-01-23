@@ -130,7 +130,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviors\IWindowServiceEx.cs" />
+    <Compile Include="Behaviors\PointDrawerBehavior.cs" />
     <Compile Include="Behaviors\WindowServiceEx.cs" />
+    <Compile Include="Drawer\DrawerAdorner.cs" />
+    <Compile Include="Drawer\IShape.cs" />
+    <Compile Include="Drawer\PointShape.cs" />
+    <Compile Include="Drawer\ShapeBase.cs" />
     <Compile Include="IoCModules\BusinessLogicModule.cs" />
     <Compile Include="IoCModules\Mapping.cs" />
     <Compile Include="Behaviors\DataGridControlItemsSourceBehavior.cs" />
@@ -145,11 +150,15 @@
     <Compile Include="ViewModels\CrudListViewModelBase.cs" />
     <Compile Include="ViewModels\ModelEditorParameter.cs" />
     <Compile Include="ViewModels\ModelEditorViewModelBase.cs" />
+    <Compile Include="ViewModels\PhotoEditorViewModel.cs" />
     <Compile Include="ViewModels\UserEditorViewModel.cs" />
     <Compile Include="ViewModels\UserGroupEditorViewModel.cs" />
     <Compile Include="ViewModels\UserGroupsListViewModel.cs" />
     <Compile Include="ViewModels\UsersCrudListViewModel.cs" />
     <Compile Include="IoCModules\ViewsModule.cs" />
+    <Compile Include="Views\PhotoEditorView.xaml.cs">
+      <DependentUpon>PhotoEditorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserEditorView.xaml.cs">
       <DependentUpon>UserEditorView.xaml</DependentUpon>
     </Compile>
@@ -172,6 +181,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\PhotoEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserEditorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

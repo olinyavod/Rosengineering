@@ -7,6 +7,7 @@
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:viewModels="clr-namespace:Rosengineering.Desktop.ViewModels"
              xmlns:props="clr-namespace:Rosengineering.Desktop.Properties"
+             xmlns:behaviors="clr-namespace:Rosengineering.Desktop.Behaviors"
              mc:Ignorable="d" 
              Padding="10"
              d:DesignHeight="300" d:DesignWidth="300"
@@ -21,6 +22,7 @@
     </UserControl.Resources>
     <dxmvvm:Interaction.Behaviors>
         <dxmvvm:MessageBoxService/>
+        <behaviors:WindowServiceEx/>
         <dxmvvm:CurrentWindowService ClosingCommand="{Binding ClosingCommand}"/>
     </dxmvvm:Interaction.Behaviors>
     <Grid>
@@ -65,6 +67,12 @@
                   DisplayMemberPath="Title"
                   SelectedItem="{Binding UserGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
                  SelectedValue="{Binding UserGroupId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Grid.Row="4" 
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Left"
+                Content="Photo"
+                Command="{Binding ShowPhotoEditorCommand}"/>
         <StackPanel Grid.Row="4"
                     Grid.Column="0" 
                     Grid.ColumnSpan="2"
@@ -79,3 +87,4 @@
         </StackPanel>
     </Grid>
 </UserControl>
+
