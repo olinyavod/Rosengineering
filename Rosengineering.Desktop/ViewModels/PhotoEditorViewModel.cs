@@ -32,5 +32,24 @@ namespace Rosengineering.Desktop.ViewModels
 			get { return GetProperty(() => Image); }
 			set { SetProperty(() => Image, value); }
 		}
+
+		public bool IsManipulationEnabled
+		{
+			get { return GetProperty(() => IsManipulationEnabled); }
+			set { SetProperty(() => IsManipulationEnabled, value, () => OnIsManipulationEnabledChanged(value)); }
+		}
+
+		private void OnIsManipulationEnabledChanged(bool value)
+		{
+			if (value)
+				ZoomFactor = 0.5;
+			else ZoomFactor = 0;
+		}
+
+		public double ZoomFactor
+		{
+			get { return GetProperty(() => ZoomFactor); }
+			set { SetProperty(() => ZoomFactor, value, () => IsManipulationEnabled = value != 0); }
+		}
 	}
 }

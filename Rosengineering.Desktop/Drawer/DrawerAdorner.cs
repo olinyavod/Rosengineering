@@ -53,5 +53,21 @@ namespace Rosengineering.Desktop.Drawer
 			_currentShape = null;
 			InvalidateVisual();
 		}
+
+		public void SetCurrent(IShape shape, Point pt)
+		{
+			_currentShape = shape;
+			_currentShape.StartMove(pt);
+		}
+
+		public IShape GetShape(Point pt)
+		{
+			foreach (var shape in _shapes)
+			{
+				if (shape.Contains(pt))
+					return shape;
+			}
+			return null;
+		}
 	}
 }

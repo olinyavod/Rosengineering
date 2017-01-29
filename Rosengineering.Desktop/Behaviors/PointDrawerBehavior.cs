@@ -23,8 +23,15 @@ namespace Rosengineering.Desktop.Behaviors
 
 		private void AssociatedObjectOnMouseDown(object sender, MouseButtonEventArgs e)
 		{
+			var pt = e.GetPosition(AssociatedObject);
 			if (e.LeftButton == MouseButtonState.Pressed && e.RightButton == MouseButtonState.Released)
-				_adorner.StartAddPoint(e.GetPosition(AssociatedObject));
+			{
+				var shape = _adorner.GetShape(pt);
+				if (shape != null)
+					_adorner.SetCurrent(shape, pt);
+				else
+					_adorner.StartAddPoint(pt);
+			}
 			e.Handled = true;
 		}
 

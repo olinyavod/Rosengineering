@@ -7,6 +7,7 @@
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:viewModels="clr-namespace:Rosengineering.Desktop.ViewModels"
              xmlns:behaviors="clr-namespace:Rosengineering.Desktop.Behaviors"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance viewModels:PhotoEditorViewModel}"
              DataContext="{dxmvvm:ViewModelSource viewModels:PhotoEditorViewModel}"
@@ -20,13 +21,22 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button Content="Open..."
-                Command="{Binding OpenPhotoCommand}"/>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Open..."
+                    Command="{Binding OpenPhotoCommand}"/>
+            <CheckBox Content="Zoom"
+                      IsChecked="{Binding IsManipulationEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+        
         <AdornerDecorator Grid.Row="1">
-             <Image Source="{Binding Image}">
-            <dxmvvm:Interaction.Behaviors>
-                <behaviors:PointDrawerBehavior/>
-            </dxmvvm:Interaction.Behaviors>
+            <xctk:MagnifierManager.Magnifier>
+                <xctk:Magnifier Radius="100" 
+                                    ZoomFactor="{Binding ZoomFactor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </xctk:MagnifierManager.Magnifier>
+            <Image Source="{Binding Image}">
+                <dxmvvm:Interaction.Behaviors>
+                    <behaviors:PointDrawerBehavior/>
+                </dxmvvm:Interaction.Behaviors>
         </Image>
         </AdornerDecorator>
        
